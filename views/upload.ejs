@@ -1,4 +1,5 @@
 <% include ./partials/header.ejs %>
+ 
   <div class="w-full min-h-screen bg-zinc-900 text-white py-5">
     <div class="flex justify-between items-center px-4">
       <a class="text-sm text-blue-500" href="/profile"><i class="ri-arrow-left-s-line"></i> profile</a>
@@ -9,19 +10,49 @@
       <div class="image w-[25vw] h-[25vw] rounded-full border-2 border-zinc-800 flex items-center justify-center">
         <i class="text-5xl font-light ri-image-line"></i>
       </div>
-      <button id="selectpic" class="text-blue-500 capitalize">select picture</button>
+      <button id="selectpic" class="text-blue-500 capitalize">Select Picture</button>
+     <div class="flex gap-2">
+      <h3 id="selectPost" class="text-white border-b text-md px-1 py-1 border-white capitalize text-lg">post</h3>
+      <h3 id="selectStory" class="text-white opacity-50 text-md px-1 py-1 border-white capitalize">story</h3>
+     </div>
     </div>
-    <form id="uploadform" action="/upload" class="w-full px-6 py-3 mt-10" enctype="multipart/form-data" method="post">
-        <input hidden type="file" name="image">
-        <textarea class="px-2 py-1 w-full bg-zinc-900 border-2 h-20 border-zinc-800 resize-none rounded-md outline-none" placeholder="Write a caption..."></textarea>
+    <form id="uploadform" action="/postupload" class="w-full px-6 py-3 mt-10" enctype="multipart/form-data" method="post">
+        <input hidden type="radio" value="post" name="category"  checked id="postRadio">
+        <input hidden type="radio" value="story" name="category" id="storyRadio">
+        <input hidden type="file" name="image" id="inputImage">
+        <textarea class="px-2 py-1 w-full bg-zinc-900 border-2 h-20 border-zinc-800 resize-none rounded-md outline-none" placeholder="Write a caption..." name="caption"></textarea>
         <input class="w-full px-2 py-2 bg-blue-500 rounded-md" type="submit" value="Post">
     </form>
   </div>
 
   <script>
+    let post = document.querySelector("#selectPost")
+    let story= document.querySelector("#selectStory")
     document.querySelector("#selectpic")
     .addEventListener("click", function(){
-        document.querySelector("#uploadform input").click();
+        document.querySelector("#inputImage").click();
+    });
+   
+    post.addEventListener("click", function(){
+        post.classList.add("text-lg","text-white","border-b");
+        post.classList.remove("opacity-50");
+        story.classList.remove("text-lg","text-white","border-b");
+        story.classList.add("opacity-50")
+        document.querySelector("#postRadio").setAttribute("checked",true);
+        document.querySelector("#storyRadio").removeAttribute("checked");
+        document.querySelector("#uploadform textarea").classList.remove("hidden");
+
+    });
+   
+    story.addEventListener("click", function(){
+      story.classList.add("text-lg","text-white","border-b");
+        post.classList.remove("text-lg","text-white","border-b");
+        post.classList.add("opacity-50")
+        story.classList.remove("opacity-50");
+        document.querySelector("#storyRadio").setAttribute("checked",true);
+        document.querySelector("#postRadio").removeAttribute("checked");
+        document.querySelector("#uploadform textarea").classList.add("hidden");
+
     });
   </script>
 <% include ./partials/footer.ejs %>

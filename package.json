@@ -11,6 +11,14 @@
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
-    "morgan": "~1.9.1"
+    "mongoose": "^8.0.3",
+    "mongoose-express-session": "^0.0.5",
+    "mongoose-session": "^0.0.4",
+    "morgan": "~1.9.1",
+    "multer": "^1.4.5-lts.1",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^8.0.0",
+    "uuid": "^9.0.1"
   }
 }
