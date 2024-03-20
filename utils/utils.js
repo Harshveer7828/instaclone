@@ -20,9 +20,9 @@ function timeSinceUpload(createdAt) {
     } else if (days < 7) {
       return `${days}d`;
     } else if (weeks < 4) {
-      return `${weeks} weeks`;
+      return `${weeks} w`;
     } else {
-      return `${months} months`;
+      return `${months} m`;
     }
   }
   module.exports={timeSinceUpload}

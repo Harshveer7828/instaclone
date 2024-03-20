@@ -2,7 +2,7 @@ const mongoose=require('mongoose');
 
 const plm=require('passport-local-mongoose')
 
-mongoose.connect('mongodb://0.0.0.0/Insatgram');
+mongoose.connect('mongodb+srv://harshveer7828:NaCM177JdsP8dulB@cluster0.ppnm2pu.mongodb.net/Insatgram');
 
 const userSchema=mongoose.Schema({
   username:String,
