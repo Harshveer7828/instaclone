@@ -296,4 +296,9 @@ router.get("/logout", function (req, res, next) {
   });
 });
 
+router.get('/message',isLoggedIn,async (req,res)=>{
+  const loggedUser = await userModel.findOne({username: req.session.passport.user})
+  res.render('message.ejs',{footer: true,loggedUser})
+})
+
 module.exports = router;
