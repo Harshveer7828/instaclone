@@ -1,16 +1,23 @@
 <% include ./partials/header.ejs %>
-    <div class="container h-[100vh] w-full bg-zinc-900 flex flex-col items-center relative">
-        <div class="w-full min-h-[10vh] bg-zinc-900 px-4 py-5">
-            <div class="border-2 border-zinc-800 flex items-center justify-between px-2 py-1 rounded-md">
-                <i class="text-white ri-search-line"></i>
-                <input class="searchInp ml-1 w-full bg-zinc-900 outline-none text-zinc-400" type="text" placeholder="search username">
-            </div>
-            <div class="users">
-              
-            </div>
-          </div>
-        <div class="messages min-h-[10vh] w-full bg-red-900">
-            
+    <div class="container h-[100vh] w-full bg-zinc-900 flex flex-col items-start relative">
+        <div class="upperHead p-2">
+            <h1 class="text-white text-2xl">Message To Your Friends</h1>
         </div>
+        <div class="messages min-h-[0vh] w-full p-2">
+            <% loggedUser.following.forEach(friend =>{ %>
+                <a href="/message/<%= friend.username %>}" class="outline-none">
+                    <div class="text-white flex items-center gap-2 mt-5">
+                        <div class="image w-[11vw] h-[11vw] rounded-full bg-sky-100 overflow-hidden">
+                            <img class="h-full w-full object-cover" src="/images/uploads/<%=friend.profileImage%>">   
+                        </div>
+                        <div class="text">
+                            <h3><%=friend.username%></h3>
+                            <h4 class="text-xs opacity-30 leading-none"><%=friend.fullname%></h4>
+                        </div>
+                    </div>            
+                </a>
+            <%} ) %>
+        </div>
+        <a href="/search" class="text-white opacity-30 p-2"><span >Follow User To Message Them</span></a>
     </div>
 <% include ./partials/footer.ejs %>

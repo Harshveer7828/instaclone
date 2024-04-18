@@ -297,8 +297,17 @@ router.get("/logout", function (req, res, next) {
 });
 
 router.get('/message',isLoggedIn,async (req,res)=>{
-  const loggedUser = await userModel.findOne({username: req.session.passport.user})
+  const loggedUser = await userModel.findOne({username: req.session.passport.user}).populate('following')
   res.render('message.ejs',{footer: true,loggedUser})
 })
+
+router.get('/message/:username',isLoggedIn,async (req,res)=>{
+  const loggedUser = await userModel.findOne({username: req.session.passport.user});
+  res.render('messagePage.ejs',{footer:true,loggedUser});
+})
+
+
+
+
 
 module.exports = router;
