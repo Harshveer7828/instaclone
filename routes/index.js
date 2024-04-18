@@ -303,7 +303,10 @@ router.get('/message',isLoggedIn,async (req,res)=>{
 
 router.get('/message/:username',isLoggedIn,async (req,res)=>{
   const loggedUser = await userModel.findOne({username: req.session.passport.user});
-  res.render('messagePage.ejs',{footer:true,loggedUser});
+
+  const oppositeUser = await userModel.findOne({username : req.params.username});
+  console.log(oppositeUser,req.params.username);
+  res.render('messagePage.ejs',{footer:false,loggedUser,oppositeUser});
 })
 
 

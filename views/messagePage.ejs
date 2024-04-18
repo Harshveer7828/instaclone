@@ -1,3 +1,32 @@
 <% include ./partials/header.ejs %>
-    this is message page
-<% include ./partials/footer.ejs %>
+    <div class="messageContainer min-h-[100vh] w-full bg-zinc-800 relative">
+        <div class="userInfo h-[12vh] w-full bg-zinc-900  px-2 flex items-center justify-between ">
+            <div class="info flex gap-4 items-center">
+                <a href="/message" class="text-white text-3xl"><i class="ri-arrow-left-line "></i></a>
+                <img class="h-[3rem] w-[3rem] rounded-full" src="/images/uploads/<%=oppositeUser.profileImage%>">
+                <h1 class="text-white text-xl font-semibold">
+                    <%=oppositeUser.username%>
+                </h1>
+            </div>
+            <div class="dots flex flex-col gap-1 mr-4">
+                <div class="dots p-0.5 bg-white rounded-full"></div>
+                <div class="dots p-0.5 bg-white rounded-full"></div>
+                <div class="dots p-0.5 bg-white rounded-full"></div>
+            </div>
+        </div>
+        <div class="messages w-[100%] min-h-full relative">
+            <div class="outGoingMessage ml-auto bg-blue-600 text-white text-xl px-2 py-2 rounded-full w-fit mt-2">
+                <h4>message form user</h4>
+            </div>
+            <div class="incommingMessage mr-auto bg-zinc-900 text-white text-xl px-2 py-2 rounded-full w-fit mt-2 mb-auto">
+                <h4>message form oppo user</h4>
+            </div>
+        </div>
+        <div class="bottom absolute bottom-0 left-0 h-[8vh] w-full flex items-center justify-center">
+            <textarea type="text"  name="message" id="messageInput" placeholder="Enter your message" class="text-white bg-zinc-900 border-1 px-4  rounded-full w-[80%]"></textarea>
+            <div class="sendBtn px-2 py-1 ml-1 rounded-full bg-blue-600">
+                <i class="ri-send-plane-2-fill text-white text-2xl"></i>
+            </div>
+        </div>
+    </div>
+    <% include ./partials/footer.ejs %>
