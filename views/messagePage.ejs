@@ -1,4 +1,11 @@
 <% include ./partials/header.ejs %>
+    <audio hidden id="myAudio" controls>
+        <source src="/media/COMCell_Message sent (ID 1313)_BSB.wav">
+    </audio>
+    <audio hidden id="RecievedmyAudio" controls>
+        <source src="/media/sly-user-interface-sound.mp3">
+    </audio>
+
     <div class="messageContainer min-h-[100vh] w-full bg-zinc-800 relative">
         <div class="userInfo h-[12vh] w-full bg-zinc-900  px-2 flex items-center justify-between ">
             <div class="info flex gap-4 items-center">
@@ -15,18 +22,65 @@
             </div>
         </div>
         <div class="messages w-[100%] min-h-full relative">
-            <div class="outGoingMessage ml-auto bg-blue-600 text-white text-xl px-2 py-2 rounded-full w-fit mt-2">
-                <h4>message form user</h4>
-            </div>
-            <div class="incommingMessage mr-auto bg-zinc-900 text-white text-xl px-2 py-2 rounded-full w-fit mt-2 mb-auto">
-                <h4>message form oppo user</h4>
-            </div>
+
         </div>
         <div class="bottom absolute bottom-0 left-0 h-[8vh] w-full flex items-center justify-center">
-            <textarea type="text"  name="message" id="messageInput" placeholder="Enter your message" class="text-white bg-zinc-900 border-1 px-4  rounded-full w-[80%]"></textarea>
-            <div class="sendBtn px-2 py-1 ml-1 rounded-full bg-blue-600">
+            <textarea  type="text" spellcheck="false" name="message" id="messageInput" placeholder="Enter your message"
+                class="text-white bg-zinc-900 border-1 px-4  rounded-full w-[80%]"></textarea>
+            <div onclick="OutgoingMessage()" class="sendBtn px-2 py-1 ml-1 rounded-full bg-blue-600">
                 <i class="ri-send-plane-2-fill text-white text-2xl"></i>
             </div>
         </div>
     </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+
+        var sentAudio = document.getElementById("myAudio");
+        var RecAudio = document.getElementById("RecievedmyAudio");
+
+        const play_sent_Audio = ()=> {
+            sentAudio.play();
+        }
+        const play_Rec_Audio = ()=> {
+            RecAudio.play();
+        }
+
+        let html = "";
+        const OutgoingMessage = () => {
+            let message = document.querySelector('#messageInput').value;
+            if(message.length === 0) return;
+            html += ` <div class="outGoingMessage transition all ease ml-auto bg-blue-600 text-white text-sm px-4 py-2 rounded-xl w-fit mt-2">
+                <h4>${message}</h4>
+            </div>`
+            play_sent_Audio();
+            document.querySelector('#messageInput').value = "";
+            document.querySelector(".messages").innerHTML = html;
+
+            // send a message to the opposite user 
+            socket.emit('sent-private-message',message)
+
+            setTimeout(() => {
+                incommingMessage()
+            }, 2000);
+        }
+
+        const incommingMessage = ()=>{
+            let message = "hey bhbai jan kes hoo mere dost kyaa hall hai bhaiyooo";
+            html +=`<div
+                class="incommingMessage mr-auto bg-zinc-900 text-white text-sm px-4 py-2 rounded-xl w-fit mt-2 mb-auto">
+                <h4>${message}</h4>
+            </div>
+          `
+
+          
+            play_Rec_Audio()
+
+            document.querySelector('.messages').innerHTML = html
+        }
+
+        
+       
+
+    </script>
     <% include ./partials/footer.ejs %>
