@@ -15,8 +15,7 @@ io.on( "connection", function( socket ) {
         reciever : data.reciever
        });
        const reciever = await userModel.findOne({username : data.reciever});
-       socket.to(reciever.socketId).emit('recieve-private-message',data);
-       console.log(data);
+       socket.to(reciever.socketId).emit('recieve-private-message',data.message);
 
    });
     

@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const userModel = require("./users");
+const messageModel = require("./message.js");
 const postModel = require("./post");
 const storyModel = require("./story");
 const localStrategy = require("passport-local");
@@ -310,6 +311,27 @@ router.get('/message/:username',isLoggedIn,async (req,res)=>{
 })
 
 
+router.post('/getMessages', isLoggedIn, async (req, res, next) => {
+
+  const chats = await messageModel.find({
+    $or: [
+      {
+        sender: req.user.username,
+        receiver: req.body.oppositeUser
+      },
+      {
+        sender: req.body.oppositeUser,
+        receiver: req.user.username
+      }
+    ]
+  })
+
+  console.log(chats)
+
+  res.status(200).json(chats)
+
+
+})
 
 
 
