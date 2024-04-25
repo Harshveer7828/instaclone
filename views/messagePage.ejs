@@ -34,10 +34,13 @@
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
+        let user = '<%=loggedUser.username%>';
+        let oppositeUser = '<%=oppositeUser.username%>';
         var socket = io();
 
         var sentAudio = document.getElementById("myAudio");
         var RecAudio = document.getElementById("RecievedmyAudio");
+       
 
         const play_sent_Audio = ()=> {
             sentAudio.play();
@@ -45,7 +48,7 @@
         const play_Rec_Audio = ()=> {
             RecAudio.play();
         }
-
+       
         let html = "";
         const OutgoingMessage = () => {
             let message = document.querySelector('#messageInput').value;
@@ -56,9 +59,9 @@
             play_sent_Audio();
             document.querySelector('#messageInput').value = "";
             document.querySelector(".messages").innerHTML = html;
-
+            // socket.emit('sent-private-message',{oppositeUser,user})
             // send a message to the opposite user 
-            socket.emit('sent-private-message',message)
+            socket.emit('sent-private-message',{message,sender : '<%=loggedUser.username%>',reciever :oppositeUser})
 
             setTimeout(() => {
                 incommingMessage()
@@ -79,6 +82,10 @@
             document.querySelector('.messages').innerHTML = html
         }
 
+        socket.on('recieve-private-message',data=>{
+            console.log(data)
+        });
+        
         
        
 

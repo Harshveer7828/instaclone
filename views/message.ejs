@@ -5,14 +5,14 @@
         </div>
         <div class="messages min-h-[0vh] w-full p-2">
             <% loggedUser.following.forEach(friend =>{ %>
-                <a href="/message/<%= friend.username %>" class="outline-none">
-                    <div class="text-white flex items-center gap-2 mt-5">
-                        <div class="image w-[11vw] h-[11vw] rounded-full bg-sky-100 overflow-hidden">
-                            <img class="h-full w-full object-cover" src="/images/uploads/<%=friend.profileImage%>">   
+                <a href="/message/<%= friend.username %>"  data-id = "<%= friend._id %>" class="outline-none relative z-[99] h-full w-full friendss">
+                    <div class="text-white flex items-center gap-2 mt-5 friendss" data-id = "<%= friend._id %>" >
+                        <div class="image w-[11vw] h-[11vw] rounded-full bg-sky-100 overflow-hidden" data-id = "<%= friend._id %>" >
+                            <img class="h-full w-full object-cover friendss"  src="/images/uploads/<%=friend.profileImage%>" data-id = "<%= friend._id %>" >   
                         </div>
-                        <div class="text">
-                            <h3><%=friend.username%></h3>
-                            <h4 class="text-xs opacity-30 leading-none"><%=friend.fullname%></h4>
+                        <div class="text ">
+                            <h3  data-id = "<%= friend._id %>" class="friendss"><%=friend.username%></h3>
+                            <h4 data-id = "<%= friend._id %>" class="friendss friendId text-xs opacity-30 leading-none"><%=friend.fullname%></h4>
                         </div>
                     </div>            
                 </a>
@@ -20,4 +20,5 @@
         </div>
         <a href="/search" class="text-white opacity-30 p-2"><span >Follow User To Message Them</span></a>
     </div>
+  
 <% include ./partials/footer.ejs %>
