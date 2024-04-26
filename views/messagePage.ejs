@@ -33,13 +33,22 @@
         </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"
+        integrity="sha512-NQfB/bDaB8kaSXF8E77JjhHG5PM6XVRxvHzkZiwl3ddWCEPBa23T76MuWSwAJdMGJnmQqM0VeY9kFszsrBEFrQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         let user = '<%=loggedUser.username%>';
         let oppositeUser = '<%=oppositeUser.username%>';
         var socket = io();
-
+        
         var sentAudio = document.getElementById("myAudio");
         var RecAudio = document.getElementById("RecievedmyAudio");
+
+        // axios request for the old messsage 
+        // const response = axios.post('/getMessages',{
+
+        // })
+
 
 
         const play_sent_Audio = () => {
@@ -61,12 +70,8 @@
             document.querySelector(".messages").innerHTML = html;
             // socket.emit('sent-private-message',{oppositeUser,user})
             // send a message to the opposite user 
-            socket.emit('sent-private-message', { message, sender: '<%=loggedUser.username%>', reciever: oppositeUser })
+            socket.emit('sent-private-message', { message, sender: user, reciever: oppositeUser })
 
-            socket.on('recieve-private-message', data => {
-                console.log(data);
-                incommingMessage(data);
-            });
 
 
         }
@@ -78,11 +83,21 @@
                 <h4>${data}</h4>
             </div>
           `
-            play_Rec_Audio()
+
 
             document.querySelector('.messages').innerHTML = html
         }
 
+        // sending and recieving the private messages 
+        socket.on('recieve-private-message', data => {
+            if (data.sender == oppositeUser) {
+                OutgoingMessage()
+            }
+            if (data.reciever == user) incommingMessage(data.message)
+        });
+
+        // loading old chats using axios request
+       
 
 
 
