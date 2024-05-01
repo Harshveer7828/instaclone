@@ -1,6 +1,7 @@
 const mongoose=require('mongoose');
 
-const plm=require('passport-local-mongoose')
+const plm=require('passport-local-mongoose');
+const { Socket } = require('socket.io');
 
 mongoose.connect('mongodb+srv://harshveer7828:0111Al211068@cluster0.ppnm2pu.mongodb.net/');
 // mongoose.connect('mongodb://0.0.0.0/Insatgram');
@@ -38,6 +39,7 @@ const userSchema=mongoose.Schema({
       ref:"post"
     }
   ],
+  socketId:String
 })
 userSchema.plugin(plm);
 
